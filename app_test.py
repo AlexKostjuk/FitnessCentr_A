@@ -12,30 +12,17 @@ import sqlite3
 app = Flask(__name__)
 app.secret_key = "mzdfhgvbdatJT67tdcghb"
 
-# def check_existence(username, password):
-#     table = 'user'
-#     colons = None
-#     condition = {'login': username, 'password': password}
-#     with Dbsql('db') as db:
-#         user = db.fetch_one(table, colons, condition)
-#     return user is not None
+
 
 def check_existence(username, password):
     database.init_db()
     user = database.db_session.query(models.User).filter_by(login = username, password = password).first()
-   # '""user2 = select(models.User).where(login = username, password = password)
-    # table = 'user'
-    # colons = None
-    # condition = {'login': username, 'password': password}
-    # with Dbsql('db') as db:
-    #     user = db.fetch_one(table, colons, condition)
-    # return user is not None'""
+
     return user
 
 
 @app.get('/')
 def home():
-    # user_id = session.get('user_id', None)
 
     return render_template('home.html')
 
@@ -43,8 +30,6 @@ def home():
 @app.post('/register')
 def new_user_register():
     from_data = request.form
-    # table_bd = "user"
-    # k_r = {'login' : from_data['login'], 'password' : from_data['password'], 'birth_date' : from_data['birth_date'], 'phone' : from_data['phone']}
 
     database.init_db()
     user1 = models.User( login = from_data['login'],
@@ -53,10 +38,7 @@ def new_user_register():
                          phone = from_data['phone'])
     database.db_session.add(user1)
     database.db_session.commit()
-    # with Dbsql('db') as db:
-    #     db.insert_to_db(table_bd, k_r)
 
-    # Dbsql.insert_to_db(a)
     return render_template('register_add.html', login=from_data['login'])
 
 
@@ -65,22 +47,7 @@ def user_register_invitation():
     return render_template("register.html")
 
 
-# @app.post('/login')
-# def user_login():
-#     from_data = request.form
-#     login = request.form['login']
-#     password = request.form['password']
-#     if check_existence(login, password):
-#         with Dbsql('db') as db:
-#             table = 'user'
-#             colons = None
-#             condition = {'login': login}
-#             user = db.fetch_one(table, colons, condition)
-#         session['user_id'] = user['id']
-#         return redirect('/user')
-#     else:
-#         return redirect('/bad_login_or_password')
-#
+
 
 
 @app.post('/login')
@@ -91,11 +58,7 @@ def user_login():
     user = check_existence(login, password)
     print(user)
     if user is not None:
-        # with Dbsql('db') as db:
-        #     table = 'user'
-        #     colons = None
-        #     condition = {'login': login}
-        #     user = db.fetch_one(table, colons, condition)
+
         session['user_id'] = {"id" : user.id, 'login': user.login}
         return redirect('/user')
     else:
@@ -132,12 +95,9 @@ def add_user_info():
 def user_info():
     user_id = session.get('user_id', None)
     user_id_c = user_id['id']
+    database.init_db()
+    res = database.db_session.query(models.User).filter_by(id = user_id_c).all()
 
-    table = 'user'
-    colons = None
-    condition = {'id': user_id_c}
-    with Dbsql('db') as db:
-        res = db.fetch_oll(table, colons, condition)
     return render_template("user.html", res = res)
 
 
@@ -157,18 +117,20 @@ def add_funds():
 
 def user_deposit_info():
     user_id = session.get('user_id', None)
+    user_id_c = user_id['id']
+    database.init_db()
+    res = database.db_session.query(models.User).filter_by(id=user_id_c).one()
+    print(res)
 
-    # a = 'select funds from user where id=1'
+
+    # table = 'user'
+    # colons = 'funds'
+    # condition = {'id': user_id}
     # with Dbsql('db') as db:
-    #     res = db.fetch_oll(a)
-    table = 'user'
-    colons = 'funds'
-    condition = {'id': user_id}
-    with Dbsql('db') as db:
-        res = db.fetch_oll(table, colons, condition)
-    # return res
+    #     res = db.fetch_oll(table, colons, condition)
+    # # return res
 
-    return render_template("funds.html", res = res)
+    return render_template("funds.html", res = res.funds)
 
 
 @app.post('/reservations')
@@ -345,9 +307,7 @@ def get_service_info(gym_id, service_id):
 
 @app.get('/fitness_center/<gym_id>/trainer')
 def get_trainer(gym_id):
-    # a = f'select name from trainer where fitness_center_id={gym_id}'
-    # with Dbsql('db') as db:
-    #     res = db.fetch_oll(a)
+
     table = 'trainer'
     colons = ['name']
     condition = {'fitness_center_id': gym_id}
@@ -359,9 +319,7 @@ def get_trainer(gym_id):
 
 @app.get('/fitness_center/<gym_id>/trainer/<trainer_id>')
 def get_coach_info(gym_id, trainer_id):
-    # a = f'select * from trainer where fitness_center_id={gym_id} AND id={trainer_id}'
-    # with Dbsql('db') as db:
-    #     res = db.fetch_oll(a)
+
     table = 'trainer'
     colons = None
     condition = {'fitness_center_id': gym_id, 'trainer.id': trainer_id}
@@ -380,19 +338,7 @@ def get_coach_score(gym_id, trainer_id):
     print(gym_id, trainer_id)
     return render_template('score.html', gym_id=gym_id, trainer_id=trainer_id)
 
-#     return f"""<form action='/fitness_center/<gym_id>/trainer/<trainer_id>/score' method="POST">
-#   <label for="number">gym_id:</label><br>
-#    <textarea id="gym_id" name="gym_id" rows="1" cols="3">{gym_id}</textarea><br>
-#   <label for="number">trainer_id:</label><br>
-#      <textarea id="trainer_id" name="trainer_id" rows="1" cols="3">{trainer_id}</textarea><br>
-#   <label for="text">text:</label><br>
-#   <input type="text" id="text" name="text"><br>
-#   <label for="number">point:</label><br>
-#   <input type="number" id="point" name="point">
-#
-#
-#   <input type="submit" value="Submit">
-# </form>"""
+
 
 
 @app.post('/fitness_center/<gym_id>/trainer/<trainer_id>/score')
@@ -421,9 +367,7 @@ def update_coach_score(gym_id, trainer_id):
 
 @app.get('/fitness_center/<gym_id>/loyality_programs')
 def get_loyality_programs(gym_id):
-    # a = f'select name from fitness_center where id={gym_id}'
-    # with Dbsql('db') as db:
-    #     res = db.fetch_oll(a)
+
     table = 'fitness_center'
     colons = ['name']
     condition = {'id': gym_id}
