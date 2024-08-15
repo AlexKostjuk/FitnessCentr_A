@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, session, redirect
 from SqlLIteDB_test import Dbsql, login_required
-from fitnes_center_flask.test import database, models
+import database, models
 from utils_test import clac_slots
 from datetime import datetime
 
@@ -65,41 +65,41 @@ def user_register_invitation():
     return render_template("register.html")
 
 
-@app.post('/login')
-def user_login():
-    from_data = request.form
-    login = request.form['login']
-    password = request.form['password']
-    if check_existence(login, password):
-        with Dbsql('db') as db:
-            table = 'user'
-            colons = None
-            condition = {'login': login}
-            user = db.fetch_one(table, colons, condition)
-        session['user_id'] = user['id']
-        return redirect('/user')
-    else:
-        return redirect('/bad_login_or_password')
-
-
-
 # @app.post('/login')
 # def user_login():
 #     from_data = request.form
 #     login = request.form['login']
 #     password = request.form['password']
-#     user = check_existence(login, password)
-#     print(user)
-#     if user is not None:
-#         # with Dbsql('db') as db:
-#         #     table = 'user'
-#         #     colons = None
-#         #     condition = {'login': login}
-#         #     user = db.fetch_one(table, colons, condition)
-#         session['user_id'] = {"user_id" : user.id}
+#     if check_existence(login, password):
+#         with Dbsql('db') as db:
+#             table = 'user'
+#             colons = None
+#             condition = {'login': login}
+#             user = db.fetch_one(table, colons, condition)
+#         session['user_id'] = user['id']
 #         return redirect('/user')
 #     else:
 #         return redirect('/bad_login_or_password')
+#
+
+
+@app.post('/login')
+def user_login():
+    from_data = request.form
+    login = request.form['login']
+    password = request.form['password']
+    user = check_existence(login, password)
+    print(user)
+    if user is not None:
+        # with Dbsql('db') as db:
+        #     table = 'user'
+        #     colons = None
+        #     condition = {'login': login}
+        #     user = db.fetch_one(table, colons, condition)
+        session['user_id'] = {"id" : user.id, 'login': user.login}
+        return redirect('/user')
+    else:
+        return redirect('/bad_login_or_password')
 
 
 @app.get('/login')
@@ -131,9 +131,11 @@ def add_user_info():
 
 def user_info():
     user_id = session.get('user_id', None)
+    user_id_c = user_id['id']
+
     table = 'user'
     colons = None
-    condition = {'id': user_id}
+    condition = {'id': user_id_c}
     with Dbsql('db') as db:
         res = db.fetch_oll(table, colons, condition)
     return render_template("user.html", res = res)

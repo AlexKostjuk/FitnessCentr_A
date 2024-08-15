@@ -2,12 +2,12 @@ from sqlalchemy import Column, Integer, String, DateTime
 from database import Base
 
 
-# class Fitness_center(Base):
-#     __tablename__ = 'fitness_center'
-#     id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
-#     name_fc = Column(String(50),  nullable=False)
-#     address = Column(String(50), nullable=False)
-#     contacts = Column(String(50), nullable=False)
+class Fitness_center(Base):
+    __tablename__ = 'fitness_center'
+    id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
+    name_fc = Column(String(50),  nullable=False)
+    address = Column(String(50), nullable=False)
+    contacts = Column(String(50), nullable=False)
 
 
 class User(Base):
