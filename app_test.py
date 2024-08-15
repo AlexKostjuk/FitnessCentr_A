@@ -1,7 +1,9 @@
 from flask import Flask, request, render_template, session, redirect
 from SqlLIteDB_test import Dbsql, login_required
 import database, models
-from utils_test import clac_slots
+# from utils_test import clac_slots
+from utils import clac_slots
+
 from datetime import datetime
 
 
@@ -138,7 +140,7 @@ def add_reservations():
     user_id = session.get('user_id', None)
     from_data = request.form
     table_bd = "reservation"
-    k_r = {'user_id': user_id, 'date': from_data['date'], 'time': from_data['slots'],
+    k_r = {'user_id': user_id['id'], 'date': from_data['date'], 'time': from_data['slots'],
            'trainer_id': from_data['trainer_id'], 'service_id': from_data['service_id']}
     with Dbsql('db') as db:
 

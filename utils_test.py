@@ -1,9 +1,11 @@
 import datetime
 
+# from flask import Flask, request, render_template, session, redirect
+# from SqlLIteDB_test import Dbsql, login_required
+
 from flask import Flask, request, render_template, session, redirect
 from SqlLIteDB_test import Dbsql, login_required
-
-import sqlite3
+import database, models
 
 
 
@@ -21,6 +23,11 @@ def check_existence(username, password):
 
 
 def clac_slots(trainer_id, service_id, formatted_date):
+    # database.init_db()
+    # user = database.db_session.query(models.User).filter_by(login=username, password=password).first()
+    # user = database.db_session.query(models.User).filter_by(login=username, password=password).first()
+    # user = database.db_session.query(models.User).filter_by(login=username, password=password).first()
+
 
     with Dbsql('db') as db:
 
@@ -44,6 +51,11 @@ def clac_slots(trainer_id, service_id, formatted_date):
         colons = None
         condition = {'id': service_id}
         service_info = db.fetch_one(table, colons, condition)
+
+        print(trainer_schedule)
+        print(booket_time)
+        print(trainer_capacity)
+        print(service_info)
 
 
         start_dt = datetime.datetime.strptime(trainer_schedule["date"] + ' ' + trainer_schedule["start_time"], '%d.%m.%Y %H:%M')
@@ -91,11 +103,7 @@ def clac_slots(trainer_id, service_id, formatted_date):
             srvice_start_time += datetime.timedelta(minutes=15)
         final_result = [datetime.datetime.strftime(el, '%H:%M') for el in result_time]
 
-        print(trainer_schedule)
-        print(booket_time)
-        print(trainer_schedule)
-        print(result_time)
-        print(final_result)
+
         return final_result
 
         # time_duration = datetime.datetime(year=2024, month=5, day=31, minute=0 ) + datetime.timedelta(minutes=15)
