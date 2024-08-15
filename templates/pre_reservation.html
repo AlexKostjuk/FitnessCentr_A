@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action='/reservations' method="POST">
+    <input type="hidden" name="trainer_id" value="{{ form_info['trainer_id'] }}">
+    <input type="hidden" name="service_id" value="{{ form_info['service_id'] }}">
+    <input type="hidden" name="date" value="{{ form_info['formatted_date'] }}">
+
+    <label for="slots">Choose a time:</label>
+        <select name="slots" id="slots">
+            {% for time in form_info['time_slots'] %}
+            <option value="{{ time }}">{{ time }}</option>
+            {% endfor %}
+        </select>
+
+  <input type="submit">
+</form>
+
+</body>
+</html>

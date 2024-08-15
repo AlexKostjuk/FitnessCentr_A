@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action='/fitness_center/<gym_id>/trainer/<trainer_id>/score' method="POST">
+  <label for="text">{{gym_id}}:</label><br>
+   <textarea id="gym_id" name="gym_id" rows="1" cols="3">{{gym_id}}</textarea><br>
+  <label for="text">{{trainer_id}}:</label><br>
+     <textarea id="trainer_id" name="trainer_id" rows="1" cols="3">{{trainer_id}}</textarea><br>
+  <label for="text">text:</label><br>
+  <input type="text" id="text" name="text"><br>
+  <label for="number">point:</label><br>
+  <input type="number" id="point" name="point">
+
+
+  <input type="submit" value="Submit">
+</form>
+</body>
+</html>

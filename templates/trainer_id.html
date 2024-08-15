@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+fitness center {{gym_id}}trainer {{trainer_id}} info {{res}}
+<form action='/pre_reservation' method="POST">
+    <input type="hidden" name="gym_id" value="{{ gym_id }}">
+
+    <input type="hidden" name="res" value="{{ res }}">
+
+    <input type="hidden" name="trainer_id" value="{{ trainer_id }}">
+    <input type="submit" value="Перейти к бронированию">
+    <label for="service_id">Choose service_id:</label>
+
+        <select name="service_id" id="service_id">
+    {% for service in res %}
+    <option value="{{ service['service_id'] }}">{{ service['service_name'] }}</option>
+    {% endfor %}
+<input type="date" id="start" name="desired_date" value="2024-07-22" min="2024-05-30" max="2024-05-31" />
+</select>
+
+</form>
+</body>
+</html>
