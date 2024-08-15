@@ -27,7 +27,16 @@ def check_existence(username, password):
 
 def clac_slots(trainer_id, service_id, formatted_date):
     database.init_db()
-    booket_time = select(models.Reservation).join(models.Service, full=True)
+
+    booket_time = (
+        database.db_session.query(models.Reservation)
+        .filter_by(trainer_id=trainer_id, date=formatted_date)
+        .join(models.Service, models.Reservation.service_id == models.Service.id)
+        .with_entities(models.Reservation, models.Service.duration)  # Выбор продолжительности
+        .all()
+    )
+
+    # booket_time = database.db_session.query(models.Reservation).filter_by(trainer_id=trainer_id, date=formatted_date).join(models.Service).filter_by( id=models.Reservation.id).all()
     # booket_time = (
     #     database.db_session.query(models.Reservation)
     #     .join(models.Service, models.Service.id == models.Reservation.service_id)
