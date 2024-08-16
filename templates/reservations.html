@@ -11,9 +11,9 @@ user reservations list {{res}}
 
 {% for reservation in res %}
 <p>
-  ID бронирования: {{ reservation.service_id }}
-  <form action="{{ url_for('delete_reservation', reservation_id=reservation.service_id) }}" method="post">
-    <input type="hidden" name="service_id" value="{{ reservation.service_id }}"> <!-- Скрытое поле с service_id -->
+  ID бронирования: {{ reservation.id }}
+  <form action="{{ url_for('delete_reservation', reservation_id=reservation.id) }}" method="post">
+    <input type="hidden" name="id" value="{{ reservation.id }}"> <!-- Скрытое поле с service_id -->
     <input type="submit" value="Удалить">
   </form>
 </p>

@@ -12,8 +12,8 @@
     </tr>
     {% for trainer in res %}
         <tr>
-            <td><a href="/fitness_center/{{ trainer.fitness_center_id }}/trainer/{{ trainer.id }}">{{ trainer.name }}</a></td>
-            <td>{{ trainer.sex }}</td>
+            <td><a href="/fitness_center/{{ trainer[1] }}/trainer/{{ trainer[2] }}">{{ trainer[3] }}</a></td>
+            <td>{{ trainer[4] }}</td>
         </tr>
     {% endfor %}
 </table>
@@ -25,8 +25,8 @@
     </tr>
     {% for service in res_s %}
         <tr>
-            <td><a href="/fitness_center/{{ service.fitness_center_id }}/service/{{ service.id }}">{{ service.name }}</a></td>
-            <td>{{ service.price }}</td>
+            <td><a href="/fitness_center/{{ service[1] }}/service/{{ service[2] }}">{{ service[3]}}</a></td>
+            <td>{{ service[4] }}</td>
         </tr>
     {% endfor %}
 </table>

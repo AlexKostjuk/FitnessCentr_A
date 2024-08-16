@@ -27,24 +27,15 @@ def check_existence(username, password):
 
 def clac_slots(trainer_id, service_id, formatted_date):
     database.init_db()
-
+    #
     booket_time = (
-        database.db_session.query(models.Reservation)
-        .filter_by(trainer_id=trainer_id, date=formatted_date)
-        .join(models.Service, models.Reservation.service_id == models.Service.id)
-        .with_entities(models.Reservation, models.Service.duration)  # Выбор продолжительности
-        .all()
+    database.db_session.query(models.Reservation.date, models.Reservation.time, models.Service.duration)
+    .join(models.Service, models.Reservation.service_id == models.Service.id)
+    .filter(models.Reservation.trainer_id == trainer_id, models.Reservation.date == formatted_date)
+    .all()
     )
 
-    # booket_time = database.db_session.query(models.Reservation).filter_by(trainer_id=trainer_id, date=formatted_date).join(models.Service).filter_by( id=models.Reservation.id).all()
-    # booket_time = (
-    #     database.db_session.query(models.Reservation)
-    #     .join(models.Service, models.Service.id == models.Reservation.service_id)
-    #     .filter(models.Reservation.trainer_id == trainer_id, models.Reservation.date == formatted_date)
-    #     .options(joinedload(models.Reservation.service))
-    #     .all()
-    # )
-    # booket_time = database.db_session.query(models.Reservation).filter_by(trainer_id=trainer_id, date=formatted_date).all()
+    # booket_time = database.db_session.query(models.Reservation).join(models.Service, models.Reservation.service_id==models.Service.id).filter(trainer_id=trainer_id, date=formatted_date).all()
     trainer_schedule = database.db_session.query(models.Trainer_schedule).filter_by(trainer_id=trainer_id, date=formatted_date).one()
     trainer_capacity = database.db_session.query(models.Trainer_service).filter_by(trainer_id=trainer_id, service_id=service_id).one()
     service_info = database.db_session.query(models.Service).filter_by(id=service_id).one()
@@ -90,9 +81,9 @@ def clac_slots(trainer_id, service_id, formatted_date):
     if booket_time is not None:
 
         for one_booking in booket_time:
-            booking_date = one_booking.date
-            booking_time = one_booking.time
-            booking_duration = one_booking.duration
+            booking_date = one_booking[0]
+            booking_time = one_booking[1]
+            booking_duration = one_booking[2]
             one_booking_start = datetime.datetime.strptime(booking_date + " " + booking_time,  '%d.%m.%Y %H:%M')
             booking_end = one_booking_start + datetime.timedelta(minutes=booking_duration)
             cur_dt = one_booking_start
