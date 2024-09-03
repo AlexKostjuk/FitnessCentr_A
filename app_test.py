@@ -1,4 +1,6 @@
 from flask import Flask, request, render_template, session, redirect
+
+from send_email import send_email, sum_test
 from SqlLIteDB_test import Dbsql, login_required
 import database, models
 # from utils_test import clac_slots
@@ -95,10 +97,15 @@ def add_user_info():
 @login_required
 
 def user_info():
+    # sum_test.delay(4, 4)
+
     user_id = session.get('user_id', None)
-    # user_id_c = user_id['id']
+
+    print(user_id)
+    user_id_c = user_id['id']
+    print(user_id_c)
     database.init_db()
-    res = database.db_session.query(models.User).filter_by(id = user_id).all()
+    res = database.db_session.query(models.User).filter_by(id = user_id_c).all()
 
     return render_template("user.html", res = res)
 
@@ -130,12 +137,14 @@ def user_deposit_info():
 @app.post('/reservations')
 def add_reservations():
     user_id = session.get('user_id', None)
+    user_id_c = user_id['id']
     from_data = request.form
     database.init_db()
-    res = models.Reservation(user_id=user_id, date=from_data['date'], time=from_data['slots'], trainer_id=int(from_data['trainer_id']), service_id=int(from_data['service_id']))
+    res = models.Reservation(user_id=user_id_c, date=from_data['date'], time=from_data['slots'], trainer_id=int(from_data['trainer_id']), service_id=int(from_data['service_id']))
     database.db_session.add(res)
     database.db_session.commit()
-
+    send_email.delay(from_data['date'], from_data['slots'])
+    print(from_data['date'], from_data['slots'])
     return render_template('home.html')
 
 
@@ -147,8 +156,10 @@ def add_reservations():
 
 def user_reservations_list_info():
     user_id = session.get('user_id', None)
+    user_id_c = user_id['id']
+
     database.init_db()
-    res = database.db_session.query(models.Reservation.id).filter_by(user_id=user_id).all()
+    res = database.db_session.query(models.Reservation.id).filter_by(user_id=user_id_c).all()
 
     return render_template("reservations.html", res = res)
 
@@ -156,12 +167,14 @@ def user_reservations_list_info():
 
 def delete_reservation(reservation_id):
     user_id = session.get('user_id', None)
+    user_id_c = user_id['id']
+
     from_data = request.form
     service_id = from_data.get('service_id')
     print(service_id)
 
     database.init_db()
-    res = database.db_session.query(models.Reservation).filter_by(user_id=user_id, id=from_data['id'] ).first()
+    res = database.db_session.query(models.Reservation).filter_by(user_id=user_id_c, id=from_data['id'] ).first()
     database.db_session.delete(res)
     database.db_session.commit()
     return redirect('/')
