@@ -21,7 +21,7 @@ def send_email(data, time):
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
     email_username = os.getenv('EMAIL_USERNAME')
-    email_password = os.getenv("EMAIL_PASSWORD") #"xbnb yapt krme ijfs"
+    email_password = os.getenv("EMAIL_PASSWORD")
 
     from_email = "alkost198333@gmail.com"
     to_email = "alkost198333@gmail.com"

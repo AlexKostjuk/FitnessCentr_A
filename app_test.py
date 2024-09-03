@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, request, render_template, session, redirect
 
 from send_email import send_email, sum_test
@@ -10,11 +12,13 @@ from datetime import datetime
 
 
 import sqlite3
+from dotenv import load_dotenv
+load_dotenv()
 
 
 
 app = Flask(__name__)
-app.secret_key = "mzdfhgvbdatJT67tdcghb"
+app.secret_key = os.getenv('APP_PASSWORD')
 
 
 
