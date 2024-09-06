@@ -518,4 +518,6 @@ def pre_reservation_2():
     return render_template("pre_reservation.html", form_info={'trainer_id':trainer, 'service_id':service, 'desired_date':desired_date, 'time_slots':time_slots})
 
 if __name__ == '__main__':
-    app.run()
+    host = '0.0.0.0'
+    port = 8080
+    app.run(host=host, port=port, debug=False)

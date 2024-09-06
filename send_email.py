@@ -8,7 +8,7 @@ from email.mime.text import MIMEText
 from celery import Celery
 # from app_test import password_email
 load_dotenv()
-app = Celery('send_email', broker='pyamqp://guest@localhost//')
+app = Celery('send_email', broker='pyamqp://guest:guest@rabbit:5672//')
 
 @app.task
 def sum_test(a, b):
