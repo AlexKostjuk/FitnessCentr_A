@@ -1,26 +1,99 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Список фитнес-центров</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        a:hover {
+            color: #388E3C;
+        }
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .links a {
+            text-decoration: none;
+            color: #4CAF50;
+            margin: 0 10px;
+        }
+        .links a:hover {
+            color: #388E3C;
+        }
+        .separator {
+            margin: 20px 0;
+            border-top: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
-<table>
-    <tr>
-        <th>Название</th>
-        <th>Адрес</th>
-    </tr>
-    {% for center in res %}
+
+<div class="container">
+    <h1>Список фитнес-центров</h1>
+
+    <table>
+        <tr>
+            <th>Название</th>
+            <th>Адрес</th>
+        </tr>
+        {% for center in res %}
         <tr>
             <td><a href="/fitness_center/{{ center.id }}">{{ center.name_fc }}</a></td>
             <td>{{ center.address }}</td>
         </tr>
-    {% endfor %}
-</table>
-----
-<p><a href="/logout">logout</a></p>
-----
-<p><a href="/">home</a></p>
+        {% endfor %}
+    </table>
+
+    <div class="separator"></div>
+
+    <div class="links">
+        <p><a href="/logout">Logout</a></p>
+        <p><a href="/">Home</a></p>
+    </div>
+</div>
+
 </body>
 </html>

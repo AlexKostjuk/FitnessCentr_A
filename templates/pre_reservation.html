@@ -2,27 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор времени</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label, select, input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 1em;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        a:hover {
+            color: #388E3C;
+        }
+        .separator {
+            margin: 20px 0;
+            border-top: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
 
-<form action='/reservations' method="POST">
-    <input type="hidden" name="trainer_id" value="{{ form_info['trainer_id'] }}">
-    <input type="hidden" name="service_id" value="{{ form_info['service_id'] }}">
-    <input type="hidden" name="date" value="{{ form_info['formatted_date'] }}">
+<div class="container">
+    <h1>Выберите время</h1>
 
-    <label for="slots">Choose a time:</label>
+    <form action='/reservations' method="POST">
+        <input type="hidden" name="trainer_id" value="{{ form_info['trainer_id'] }}">
+        <input type="hidden" name="service_id" value="{{ form_info['service_id'] }}">
+        <input type="hidden" name="date" value="{{ form_info['formatted_date'] }}">
+
+        <label for="slots">Выберите время:</label>
         <select name="slots" id="slots">
             {% for time in form_info['time_slots'] %}
             <option value="{{ time }}">{{ time }}</option>
             {% endfor %}
         </select>
 
-  <input type="submit">
-</form>
-----
-<p><a href="/logout">logout</a></p>
-----
-<p><a href="/">home</a></p>
+        <input type="submit" value="Забронировать">
+    </form>
+
+    <div class="separator"></div>
+
+    <p><a href="/logout">Выйти</a></p>
+    <p><a href="/">На главную</a></p>
+</div>
+
 </body>
 </html>

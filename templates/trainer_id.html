@@ -2,37 +2,105 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронирование тренера</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label, select, input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 1em;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        a:hover {
+            color: #388E3C;
+        }
+        .feedback {
+            margin-top: 20px;
+        }
+        .separator {
+            margin: 20px 0;
+            border-top: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
-<form action='/pre_reservation' method="POST">
-    <input type="hidden" name="gym_id" value="{{ gym_id }}">
 
-    <input type="hidden" name="res" value="{{ res }}">
+<div class="container">
+    <h1>Перейти к бронированию</h1>
+    <form action='/pre_reservation' method="POST">
+        <input type="hidden" name="gym_id" value="{{ gym_id }}">
+        <input type="hidden" name="res" value="{{ res }}">
+        <input type="hidden" name="trainer_id" value="{{ trainer_id }}">
 
-    <input type="hidden" name="trainer_id" value="{{ trainer_id }}">
-    <input type="submit" value="Перейти к бронированию">
-    <label for="service_id">Choose service_id:</label>
-
+        <label for="service_id">Выберите услугу:</label>
         <select name="service_id" id="service_id">
-    {% for service in res %}
-    <option value="{{ service['service_id'] }}">{{ service['service_name'] }}</option>
-    {% endfor %}
-<input type="date" id="start" name="desired_date" value="2024-07-22" min="2024-05-30" max="2024-05-31" />
-</select>
-    <br>----<br>
-<p><a href="/fitness_center/{{ gym_id }}/trainer/{{ trainer_id }}/score">Залишити відгук про тренера {{ res[0].trainer_name}}</a></p><br>----<br>
+            {% for service in res %}
+            <option value="{{ service['service_id'] }}">{{ service['service_name'] }}</option>
+            {% endfor %}
+        </select>
 
-</form>
+        <label for="desired_date">Выберите дату:</label>
+        <input type="date" id="desired_date" name="desired_date" value="2024-07-22" min="2024-05-30" max="2024-05-31">
 
-<p><a href="/logout">logout</a></p>
-----
-<p><a href="/">home</a></p>
+        <input type="submit" value="Перейти к бронированию">
+    </form>
 
-<th>Відгуки та оцінки</th>
+    <div class="separator"></div>
 
-{% for rat in rating %}
-<p><a href="/fitness_center/{{gym_id}}/trainer/{{trainer_id}}/score">відгук -- {{ rat.text }} <br> оцінка: {{ rat.point }}</a></p>
-{% endfor %}
+    <div class="feedback">
+        <p><a href="/fitness_center/{{ gym_id }}/trainer/{{ trainer_id }}/score">Оставить отзыв о тренере {{ res[0].trainer_name }}</a></p>
+        <h2>Отзывы и оценки</h2>
+        {% for rat in rating %}
+        <p><strong>Отзыв:</strong> {{ rat.text }} <br><strong>Оценка:</strong> {{ rat.point }} / 10</p>
+        {% endfor %}
+    </div>
+
+    <div class="separator"></div>
+
+    <p><a href="/logout">Выйти</a></p>
+    <p><a href="/">На главную</a></p>
+</div>
+
 </body>
 </html>

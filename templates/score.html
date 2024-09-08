@@ -2,25 +2,89 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оценка тренера</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label, textarea, input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 1em;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        a:hover {
+            color: #388E3C;
+        }
+        .separator {
+            margin: 20px 0;
+            border-top: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
-<form action='/fitness_center/<gym_id>/trainer/<trainer_id>/score' method="POST">
-  <label for="text">{{gym_id}}:</label><br>
-   <textarea id="gym_id" name="gym_id" rows="1" cols="3">{{gym_id}}</textarea><br>
-  <label for="text">{{trainer_id}}:</label><br>
-     <textarea id="trainer_id" name="trainer_id" rows="1" cols="3">{{trainer_id}}</textarea><br>
-  <label for="text">text:</label><br>
-  <input type="text" id="text" name="text"><br>
-  <label for="number">point:</label><br>
-  <input type="number" id="point" name="point">
 
+<div class="container">
+    <h1>Оставьте отзыв</h1>
 
-  <input type="submit" value="Submit">
-</form>
+    <form action='/fitness_center/{{gym_id}}/trainer/{{trainer_id}}/score' method="POST">
+        <label for="gym_id">ID фитнес-центра:</label>
+        <textarea id="gym_id" name="gym_id" rows="1" cols="3" readonly>{{gym_id}}</textarea>
 
-<p><a href="/logout">logout</a></p>
-----
-<p><a href="/">home</a></p>
+        <label for="trainer_id">ID тренера:</label>
+        <textarea id="trainer_id" name="trainer_id" rows="1" cols="3" readonly>{{trainer_id}}</textarea>
+
+        <label for="text">Отзыв:</label>
+        <input type="text" id="text" name="text" placeholder="Введите ваш отзыв">
+
+        <label for="point">Оценка (от 1 до 5):</label>
+        <input type="number" id="point" name="point" min="1" max="5" step="1">
+
+        <input type="submit" value="Отправить">
+    </form>
+
+    <div class="separator"></div>
+
+    <p><a href="/logout">Выйти</a></p>
+    <p><a href="/">На главную</a></p>
+</div>
+
 </body>
 </html>
