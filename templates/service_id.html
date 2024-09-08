@@ -13,7 +13,7 @@ fitness center {{gym_id}} service {{service_id}} info {{res}}
 
     <input type="hidden" name="service_id" value="{{ service_id }}">
     <input type="submit" value="Перейти к бронированию">
-    <label for="trainer_id">Choose trainer_id:</label>
+    <label for="trainer_id">Choose trainer:</label>
 
         <select name="trainer_id" id="trainer_id">
     {% for service in res %}
@@ -23,5 +23,12 @@ fitness center {{gym_id}} service {{service_id}} info {{res}}
 </select>
 
 </form>
+
+<p>Опис -- {{ res[0].description }}<p>
+    Вартість -- {{ res[0].price }}<p>
+----
+<p><a href="/logout">logout</a></p>
+----
+<p><a href="/">home</a></p>
 </body>
 </html>

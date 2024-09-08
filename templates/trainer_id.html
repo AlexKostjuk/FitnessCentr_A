@@ -5,7 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-fitness center {{gym_id}}trainer {{trainer_id}} info {{res}}
 <form action='/pre_reservation' method="POST">
     <input type="hidden" name="gym_id" value="{{ gym_id }}">
 
@@ -21,7 +20,19 @@ fitness center {{gym_id}}trainer {{trainer_id}} info {{res}}
     {% endfor %}
 <input type="date" id="start" name="desired_date" value="2024-07-22" min="2024-05-30" max="2024-05-31" />
 </select>
+    <br>----<br>
+<p><a href="/fitness_center/{{ gym_id }}/trainer/{{ trainer_id }}/score">Залишити відгук про тренера {{ res[0].trainer_name}}</a></p><br>----<br>
 
 </form>
+
+<p><a href="/logout">logout</a></p>
+----
+<p><a href="/">home</a></p>
+
+<th>Відгуки та оцінки</th>
+
+{% for rat in rating %}
+<p><a href="/fitness_center/{{gym_id}}/trainer/{{trainer_id}}/score">відгук -- {{ rat.text }} <br> оцінка: {{ rat.point }}</a></p>
+{% endfor %}
 </body>
 </html>

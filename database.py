@@ -16,6 +16,8 @@ DB_PORT = os.getenv('DB_PORT')
 DATABASE_URL = f'postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 engine = create_engine(DATABASE_URL)
 
+# engine = create_engine('sqlite:///db')
+
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))

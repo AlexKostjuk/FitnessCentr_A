@@ -5,18 +5,23 @@
     <title>Title</title>
 </head>
 <body>
-user reservations list {{res}}
 
 <h1>Бронирования</h1>
 
 {% for reservation in res %}
 <p>
-  ID бронирования: {{ reservation.id }}
+  Бронювання: {{ reservation.date }}
+    <p><a href="/reservations/{{ reservation.id }}">На час--{{ reservation.time }}</a></p>
+
   <form action="{{ url_for('delete_reservation', reservation_id=reservation.id) }}" method="post">
     <input type="hidden" name="id" value="{{ reservation.id }}"> <!-- Скрытое поле с service_id -->
     <input type="submit" value="Удалить">
   </form>
 </p>
 {% endfor %}
+----
+<p><a href="/logout">logout</a></p>
+----
+<p><a href="/">home</a></p>
 </body>
 </html>

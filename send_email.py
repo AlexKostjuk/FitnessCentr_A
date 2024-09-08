@@ -10,23 +10,19 @@ from celery import Celery
 load_dotenv()
 app = Celery('send_email', broker='pyamqp://guest:guest@rabbit:5672//')
 
-@app.task
-def sum_test(a, b):
-    c = a+b
-    print(c)
-    return c
+
 
 @app.task
-def send_email(data, time):
+def send_email(data, time, t_name, s_name, email):
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
     email_username = os.getenv('EMAIL_USERNAME')
     email_password = os.getenv("EMAIL_PASSWORD")
 
     from_email = "alkost198333@gmail.com"
-    to_email = "alkost198333@gmail.com"
-    subject = "alarm Temp"
-    body = f"temp CP = {data}, {time}."
+    to_email = str(email)
+    subject = "запис до тренування"
+    body = f"ви записалися до трейнера - {t_name}  на тренування з - {s_name}. {data}  числа, о {time} годині."
 
     msg = MIMEMultipart()
     msg['From'] = from_email

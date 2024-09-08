@@ -6,7 +6,7 @@ import datetime
 from flask import Flask, request, render_template, session, redirect
 from sqlalchemy import select
 
-from SqlLIteDB_test import Dbsql, login_required
+# from SqlLIteDB_test import Dbsql, login_required
 import database, models
 from sqlalchemy.orm import joinedload
 
@@ -15,13 +15,13 @@ from sqlalchemy.orm import joinedload
 app = Flask(__name__)
 app.secret_key = "mzdfhgvbdatJT67tdcghb"
 
-def check_existence(username, password):
-    table = 'user'
-    colons = None
-    condition = {'login': username, 'password': password}
-    with Dbsql('db') as db:
-        user = db.fetch_one(table, colons, condition)
-    return user is not None
+# def check_existence(username, password):
+#     table = 'user'
+#     colons = None
+#     condition = {'login': username, 'password': password}
+#     with Dbsql('db') as db:
+#         user = db.fetch_one(table, colons, condition)
+#     return user is not None
 
 
 
@@ -114,11 +114,7 @@ def clac_slots(trainer_id, service_id, formatted_date):
         srvice_start_time += datetime.timedelta(minutes=15)
     final_result = [datetime.datetime.strftime(el, '%H:%M') for el in result_time]
 
-    print(trainer_schedule)
-    print(booket_time)
-    print(trainer_schedule)
-    print(result_time)
-    print(final_result)
+
     return final_result
 
     # time_duration = datetime.datetime(year=2024, month=5, day=31, minute=0 ) + datetime.timedelta(minutes=15)

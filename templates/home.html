@@ -2,24 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Center</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333333;
+        }
+        p {
+            margin: 10px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-size: 18px;
+        }
+        a:hover {
+            color: #45a049;
+        }
+    </style>
 </head>
 <body>
-<p><a href="/register">register</a></p>
-<p><a href="/login">login</a></p>
-<p><a href="/user">user</a></p>
-<p><a href="/funds">funds</a></p>
-<p><a href="/reservations">reservations</a></p>
-<p><a href="/reservations/1">reservations/1</a></p>
-<p><a href="/checkout">checkout</a></p>
-<p><a href="/fitness_center">fitness_center</a></p>
-<!--<p><a href="/fitness_center/1">fitness_center/1</a></p>-->
-<p><a href="/fitness_center/1/service">fitness_center/1/service</a></p>
-<p><a href="/fitness_center/1/service/1">fitness_center/1/service/1</a></p>
-<p><a href="/fitness_center/1/trainer">fitness_center/1/trainer</a></p>
-<p><a href="/fitness_center/1/trainer/1">fitness_center/1/trainer/1</a></p>
-<p><a href="/fitness_center/1/trainer/1/score">fitness_center/1/trainer/1/score</a></p>
-<p><a href="/fitness_center/1/loyality_programs">fitness_center/1/loyality_programs</a></p>
-
+    <div class="container">
+        <h1>Welcome to the Fitness Center</h1>
+        <p><a href="/register">Register</a></p>
+        <p><a href="/login">Login</a></p>
+        <p><a href="/logout">Logout</a></p>
+        <p><a href="/user">User</a></p>
+        <p><a href="/reservations">Reservations</a></p>
+        <p><a href="/fitness_center">Fitness Center</a></p>
+    </div>
 </body>
 </html>
